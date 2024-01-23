@@ -19,7 +19,7 @@ const MovieList = () => {
   }
 
   function loadData(){
-    axios.get('http://localhost:5555/movie/list?page='+currentPage)
+    axios.get('/movie/list?page='+currentPage)
       .then(response => {
         // Update state with fetched data
         setItems(response.data);

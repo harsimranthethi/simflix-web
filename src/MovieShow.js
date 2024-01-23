@@ -11,7 +11,7 @@ const MovieShow = () => {
 
   useEffect(() => {
     // Make API call to get details for a specific movie based on the ID
-    axios.get(`http://localhost:5555/movie/${id}/show`)
+    axios.get(`/movie/${id}/show`)
       .then(response => {
         // Update state with fetched movie details
         setMovie(response.data);
