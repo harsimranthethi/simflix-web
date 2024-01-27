@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import axios from 'axios'; //for http requests
 
 var currentPage = 1;
+
+var searchStr = ""
 
 const MovieList = () => {
   const [items, setItems] = useState([]);
@@ -18,8 +20,17 @@ const MovieList = () => {
     loadData()
   }
 
+  function searchChangeHandler(str){
+    searchStr = str
+    currentPage = 1 ;
+    loadData()
+
+  }
+
   function loadData(){
-    axios.get('/movie/list?page='+currentPage)
+    var server = "";
+    server = "http://localhost:5556"
+    axios.get(server +'/movie/list?page='+currentPage + "&searchStr=" + searchStr)
       .then(response => {
         // Update state with fetched data
         setItems(response.data);
@@ -40,9 +51,12 @@ const MovieList = () => {
 
 
       <div class="row">
-        <div class="col-10">
+        <div class="col-md-3 pb-3">
+          <input type="text" name="stringSearch" value={searchStr} onChange={(evt) => { searchChangeHandler(evt.target.value); }}/>
         </div>
-        <div class="col-2">
+        <div class="col-md-5">
+        </div>
+        <div class="col-md-4">
           <div class="pr-3">
             <button onClick={()=>movePrevious()}>&lt; Prev</button>
             <span class="p-2">{currentPage}</span>
